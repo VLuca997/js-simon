@@ -80,7 +80,7 @@ function startGame() {
         let correctNumbers = checkNumber(myNumbers, originalNumbers);
         alert("Hai indovinato " + correctNumbers.length + " numeri: " + correctNumbers.join(', '));
         startButton.disabled = false;
-        }, 2000); // Timer di 2 secondi dopo la scomparsa dei numer icompare l'ultimo alert
+        }, 1000); // Timer di 1 secondi dopo la scomparsa dei numer icompare l'ultimo alert
     }, 9000); // Timer di 7 secondi di visibilità per i numeri
 }
 
