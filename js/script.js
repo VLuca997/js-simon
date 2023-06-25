@@ -15,20 +15,75 @@
         - dopo 10 secondi i numeri spariscono, e dopo altri 5s comprarirà il prompt per richiedere un numer oalla volta
     9) viene mostrato l'ultimo prompt con quanti numeri indovinati abbiamo finito il gioco.
 */
-
 // FUNZIONE numeri casuali
-function getRandomNumber (min, max){
-    return Math.floor(Math.random() * ((max + min)/1)) + min;
+function getRandomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-// FUNZIONE per i numeri unici ( non ripetuti nel codice stampato )
-function uniqueNumber(min, max, count){ //
-    let number = []; // array vuoto
-    while (number.lenght < count){
+// FUNZIONE per i numeri unici (non ripetuti nel codice stampato)
+function uniqueNumber(min, max, count) {
+    let numbers = [];
+    while (numbers.length < count) {
         let randomNumber = getRandomNumber(min, max);
-        if(!number.includes(randomNumber)){// neghiamo la condizione se l'array number non contiene gia il numero generato random
-            number.push(randomNumber);// se il numerp casuale non è gia inserito nell'array, allora lo inserisce
+        if (!numbers.includes(randomNumber)) {
+        numbers.push(randomNumber);
         }
     }
-    return number; // restituisce l'array quando contiene tutti i numeri dentro
+    return numbers;
 }
+
+// FUNZIONE per visualizzare il contenuto sull'HTML
+function displayNumber(numbers) {
+    let numberDiv = document.getElementById('number');
+    numberDiv.textContent = numbers.join(', ');
+    }
+
+    // FUNZIONE rimozione elementi dall'HTML per il gioco (aggiunto il timer)
+    function clearNumber() {
+    let numberDiv = document.getElementById('number');
+    numberDiv.textContent = "";
+}
+
+// FUNZIONE per controllare se i numeri inseriti sono corretti ed identici nell'ordine a quelli stampati dal computer
+function checkNumber(myNumbers, originalNumbers) {
+    let correctNumbers = [];
+    for (let i = 0; i < originalNumbers.length; i++) {
+        if (myNumbers[i] === originalNumbers[i]) {
+        correctNumbers.push(originalNumbers[i]);
+        }
+    }
+    return correctNumbers;
+}
+
+// Funzione per gestire il prompt e controllare i numeri inseriti dall'utente
+function handleUserInput(originalNumbers) {
+    let myNumbers = [];
+    for (let i = 0; i < originalNumbers.length; i++) {
+        let userInput = prompt('Inserisci il numero ' + (i + 1) + ':');
+        let number = parseInt(userInput);
+        myNumbers.push(number);
+    }
+    return myNumbers;
+}
+
+// FUNZIONE per avviare il gioco
+function startGame() {
+    startButton.disabled = true;
+    let originalNumbers = uniqueNumber(1, 60, 5);
+    displayNumber(originalNumbers);
+
+    setTimeout(function () {
+        clearNumber();
+
+        setTimeout(function () {
+        let myNumbers = handleUserInput(originalNumbers);
+        let correctNumbers = checkNumber(myNumbers, originalNumbers);
+        alert("Hai indovinato " + correctNumbers.length + " numeri: " + correctNumbers.join(', '));
+        startButton.disabled = false;
+        }, 2000); // Timer di 2 secondi dopo la scomparsa dei numer icompare l'ultimo alert
+    }, 9000); // Timer di 7 secondi di visibilità per i numeri
+}
+
+// Avvia il gioco quando il pulsante viene cliccato
+let startButton = document.getElementById('startButton');
+startButton.addEventListener('click', startGame);
