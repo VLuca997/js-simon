@@ -15,3 +15,20 @@
         - dopo 10 secondi i numeri spariscono, e dopo altri 5s comprarirà il prompt per richiedere un numer oalla volta
     9) viene mostrato l'ultimo prompt con quanti numeri indovinati abbiamo finito il gioco.
 */
+
+// FUNZIONE numeri casuali
+function getRandomNumber (min, max){
+    return Math.floor(Math.random() * ((max + min)/1)) + min;
+}
+
+// FUNZIONE per i numeri unici ( non ripetuti nel codice stampato )
+function uniqueNumber(min, max, count){ //
+    let number = []; // array vuoto
+    while (number.lenght < count){
+        let randomNumber = getRandomNumber(min, max);
+        if(!number.includes(randomNumber)){// neghiamo la condizione se l'array number non contiene gia il numero generato random
+            number.push(randomNumber);// se il numerp casuale non è gia inserito nell'array, allora lo inserisce
+        }
+    }
+    return number; // restituisce l'array quando contiene tutti i numeri dentro
+}
